@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: doctors
+    container_name: *
     depends_on:
       - postgres
     environment:
@@ -18,7 +18,7 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: doctors_db
+    container_name: *
     environment:
       - POSTGRES_USER=
       - POSTGRES_PASSWORD=
