@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: hack
+    container_name: doctors
     depends_on:
       - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/hack_telegram
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/doctors_db
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=1998
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
@@ -22,7 +22,7 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=1998
-      - POSTGRES_DB=hack_telegram
+      - POSTGRES_DB=doctors_db
     ports:
       - "6666:3335"
     volumes:
