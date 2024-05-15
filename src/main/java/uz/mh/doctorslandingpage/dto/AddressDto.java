@@ -12,6 +12,7 @@ import uz.mh.doctorslandingpage.enums.Cities;
 @ToString
 @ParameterObject
 public class AddressDto {
+    private Long id;
     private Cities city;
     private String region;
     private String street;

@@ -18,4 +18,7 @@ public class ApiErrorResponse {
     @Builder.Default
     private Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now(Clock.systemDefaultZone()));
     private String requestPath;
+    public ApiErrorResponse(String message){
+        this.message = message;
+    }
 }

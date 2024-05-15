@@ -5,26 +5,26 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: *
+    container_name: doctors
     depends_on:
       - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:----/*
-      - SPRING_DATASOURCE_USERNAME=
-      - SPRING_DATASOURCE_PASSWORD=
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/doctors_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=1998
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
-      - "8787:0000"
+      - "8787:8448"
 
   postgres:
     image: postgres:latest
-    container_name: *
+    container_name: doctors_db
     environment:
-      - POSTGRES_USER=
-      - POSTGRES_PASSWORD=
-      - POSTGRES_DB=*
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1998
+      - POSTGRES_DB=doctors_db
     ports:
-      - "0:0"
+      - "6666:3335"
     volumes:
       - myVolume:/var/lib/postgresql/data
 

@@ -1,5 +1,7 @@
 package uz.mh.doctorslandingpage.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import uz.mh.doctorslandingpage.dto.AddressDto;
 import uz.mh.doctorslandingpage.mapper.AddressMapper;
@@ -7,6 +9,7 @@ import uz.mh.doctorslandingpage.model.Address;
 import uz.mh.doctorslandingpage.model.Doctor;
 import uz.mh.doctorslandingpage.repository.AddressRepository;
 import uz.mh.doctorslandingpage.repository.DoctorRepository;
+import uz.mh.doctorslandingpage.response.ApiErrorResponse;
 import uz.mh.doctorslandingpage.response.ApiResponse;
 
 import java.util.HashSet;
@@ -47,5 +50,52 @@ public class AddressService {
         }
         return apiResponse;
     }
+    public ApiResponse<Page<AddressDto>> getAllAddresses(Pageable pageable){
+        ApiResponse<Page<AddressDto>> apiResponse = new ApiResponse<>();
+        Page<Address> addresses = addressRepository.findAll(pageable);
+        Page<AddressDto> addressDtoPage = addresses.map(addressMapper::mapToAddressDto);
+        apiResponse.setBody(addressDtoPage);
+        apiResponse.setStatus(200);
+        return apiResponse;
+    }
+    public ApiResponse<AddressDto> getAddress(Long id){
+        AddressDto addressDto;
+        ApiResponse<AddressDto> apiResponse = new ApiResponse<>();
+        Optional<Address> optionalAddress = addressRepository.findById(id);
+        if (optionalAddress.isPresent()) {
+            addressDto = addressMapper.mapToAddressDto(optionalAddress.get());
+            apiResponse.setStatus(200);
+            apiResponse.setBody(addressDto);
+        }else {
+            apiResponse.setStatus(404);
+            apiResponse.setSuccess(false);
+            apiResponse.setError(new ApiErrorResponse("Address not found"));
+        }
+        return apiResponse;
+    }
+    public ApiResponse<String> updateAddress(AddressDto addressDto){
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        Optional<Address> optionalAddress = addressRepository.findById(addressDto.getId());
+        if (optionalAddress.isPresent()) {
+            Address exitingAddress = optionalAddress.get();
+            exitingAddress.setHouseNumber(addressDto.getHouseNumber());
+            exitingAddress.setCity(addressDto.getCity());
+            exitingAddress.setRegion(addressDto.getRegion());
+            exitingAddress.setStreet(addressDto.getStreet());
+            exitingAddress.setOrient(addressDto.getOrient());
 
+            addressRepository.save(exitingAddress);
+
+            apiResponse.setBody("Address successfully changed");
+            apiResponse.setStatus(201);
+        }else {
+            apiResponse.setStatus(404);
+            apiResponse.setSuccess(false);
+            apiResponse.setError(new ApiErrorResponse("Address not found"));
+        }
+        return apiResponse;
+    }
+    public ApiResponse<String> deleteAddress(Long id){
+        return null;
+    }
 }

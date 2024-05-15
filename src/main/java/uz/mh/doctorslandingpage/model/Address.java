@@ -21,7 +21,6 @@ public class Address extends Auditable{
     private String region;
     private String street;
     private String orient;
-    @Column(unique = true)
     private Integer houseNumber;
     @ManyToMany
     private Set<Doctor> doctors;

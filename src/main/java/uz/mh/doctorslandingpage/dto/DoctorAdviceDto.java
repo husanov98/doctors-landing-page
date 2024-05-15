@@ -12,6 +12,7 @@ import org.springdoc.api.annotations.ParameterObject;
 @NoArgsConstructor
 @ParameterObject
 public class DoctorAdviceDto {
+    private Long id;
     private String name;
     private Integer price;
     private Long doctorId;
