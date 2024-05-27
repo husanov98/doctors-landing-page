@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uz.mh.doctorslandingpage.dto.EducationDto;
 import uz.mh.doctorslandingpage.response.ApiResponse;
 import uz.mh.doctorslandingpage.service.EducationService;
-
+import javax.xml.bind.annotation.XmlElement;
 @RestController
 public class EducationController {
     private final EducationService educationService;
